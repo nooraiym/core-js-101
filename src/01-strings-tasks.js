@@ -285,24 +285,62 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-  const PAIRS = {
-    A: 0,
-    J: 10,
-    Q: 11,
-    K: 12,
-  };
-  const suitOffsets = {
-    '♣': 0,
-    '♦': 13,
-    '♥': 26,
-    '♠': 39,
-  };
+  const deck = [
+    'A♣',
+    '2♣',
+    '3♣',
+    '4♣',
+    '5♣',
+    '6♣',
+    '7♣',
+    '8♣',
+    '9♣',
+    '10♣',
+    'J♣',
+    'Q♣',
+    'K♣',
+    'A♦',
+    '2♦',
+    '3♦',
+    '4♦',
+    '5♦',
+    '6♦',
+    '7♦',
+    '8♦',
+    '9♦',
+    '10♦',
+    'J♦',
+    'Q♦',
+    'K♦',
+    'A♥',
+    '2♥',
+    '3♥',
+    '4♥',
+    '5♥',
+    '6♥',
+    '7♥',
+    '8♥',
+    '9♥',
+    '10♥',
+    'J♥',
+    'Q♥',
+    'K♥',
+    'A♠',
+    '2♠',
+    '3♠',
+    '4♠',
+    '5♠',
+    '6♠',
+    '7♠',
+    '8♠',
+    '9♠',
+    '10♠',
+    'J♠',
+    'Q♠',
+    'K♠',
+  ];
 
-  const smbl = value.slice(-1);
-  const first = value.slice(0, 1);
-
-  const base = Number.isNaN(+first) ? PAIRS[first] : +first - 1;
-  return base + suitOffsets[smbl];
+  return deck.indexOf(value);
 }
 
 module.exports = {
