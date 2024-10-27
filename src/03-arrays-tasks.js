@@ -282,7 +282,7 @@ function propagateItemsByPositionIndex(arr) {
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
 function get3TopItems(arr) {
-  return arr.sort((a, b) => a - b).slice(-3);
+  return arr.sort((a, b) => b - a).slice(0, 3);
 }
 
 /**
@@ -451,10 +451,11 @@ function sortCitiesArray(arr) {
  *           [0,0,0,0,1]]
  */
 function getIdentityMatrix(n) {
-  return Array.from({ length: n }, (unused, i) => Array.from(
-    { length: n },
-    (unused2, j) => (i === j ? 1 : 0),
-  ));
+  const str = '0';
+  const arrNumbers = str.repeat(n).split('');
+  const arr = new Array(n).fill(arrNumbers);
+  const res = arr.map((e, iRow) => e.map((el, iCol) => (iRow === iCol ? 1 : +el)));
+  return res;
 }
 
 /**
@@ -520,8 +521,7 @@ function distinct(arr) {
  *   }
  */
 function group(array, keySelector, valueSelector) {
-  const map = new Map();
-  array.forEach((e) => {
+  return array.reduce((map, e) => {
     const key = keySelector(e);
     const value = valueSelector(e);
 
@@ -529,8 +529,9 @@ function group(array, keySelector, valueSelector) {
       map.set(key, []);
     }
     map.get(key).push(value);
-  });
-  return map;
+
+    return map;
+  }, new Map());
 }
 
 /**
@@ -585,12 +586,12 @@ function getElementByIndexes(arr, indexes) {
  *
  */
 function swapHeadAndTail(arr) {
-  const len = arr.length;
-  const mid = Math.floor(len / 2);
-  const head = arr.slice(0, mid);
-  const tail = arr.slice(-mid);
-
-  return len % 2 === 0 ? [...tail, ...head] : [...tail, arr[mid], ...head];
+  const middle = Math.floor(arr.length / 2);
+  const head = arr.slice(0, Math.floor(arr.length / 2));
+  const tail = arr.slice(Math.round(arr.length / 2), arr.at(-1));
+  return arr.length < 4
+    ? arr.reverse()
+    : [...tail, ...arr.slice(middle, -middle), ...head];
 }
 
 module.exports = {
